@@ -1,0 +1,25 @@
+name: Build ESP32-S3 BIN
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install PlatformIO
+      run: pip install platformio
+
+    - name: Build firmware
+      run: platformio run
+
+    - name: Upload BIN
+      uses: actions/upload-artifact@v4
+      with:
+        name: esp32-s3-bin
+        path: .pio/build/esp32-s3/firmware.bin
